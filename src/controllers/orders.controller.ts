@@ -19,51 +19,86 @@ export class OrdersController {
         private ordersRepository: MongoRepository<Order>,
     ) { }
 
+    // @Post()
+    // async createOrder(@Body() order: Order, @Res() res) {
+    //     // Prepare the dough
+    //     await new Promise(resolve => setTimeout(resolve, this.doughTime));
+    //     order.doughTime = this.doughTime;
+    //     order.orderNumber = Math.floor((Math.random() * 10000000000) + 1);
+    //     this.ordersRepository.save(order);
+
+
+    //     // Add toppings
+    //     const toppingTime = order.toppings.length * this.toppingTime / this.toppingChefs;
+    //     await new Promise(resolve => setTimeout(resolve, toppingTime));
+    //     order.toppingTime = toppingTime;
+    //     await this.ordersRepository.findOneAndUpdate({orderNumber: order.orderNumber}, {$set: {toppingTime: order.toppingTime}});
+
+    //     // Cook in oven
+    //     await new Promise(resolve => setTimeout(resolve, this.ovenTime));
+    //     order.ovenTime = this.ovenTime;
+    //     await this.ordersRepository.findOneAndUpdate({orderNumber: order.orderNumber}, {$set: {ovenTime: order.ovenTime}});
+
+    //     // Serve to customer
+    //     await new Promise(resolve => setTimeout(resolve, this.walkingDistance));
+    //     order.walkingDistance = this.walkingDistance;
+    //     order.totalTime = this.doughTime + toppingTime + this.ovenTime + this.walkingDistance;
+    //     order.status = 'served';
+    //     await this.ordersRepository.findOneAndUpdate({orderNumber: order.orderNumber}, {$set: {status: order.status, walkingDistance: order.walkingDistance, totalTime: order.totalTime}});
+    //     res.status(201).json({ id: order.orderNumber });
+    // }
+
     @Post()
-    async createOrder(@Body() order: Order, @Res() res) {
-        // Save order to database before processing
-        const createdOrder = await this.ordersRepository.save(order);
+    async createOrder(@Body() order: Order | Order[], @Res() res) {
+        if (!Array.isArray(order)) {
+            order = [order];
+        }
+        for (const singleOrder of order) {
+            // Prepare the dough
+            await new Promise(resolve => setTimeout(resolve, this.doughTime));
+            singleOrder.doughTime = this.doughTime;
+            singleOrder.orderNumber = ""+Math.floor((Math.random() * 10000000000) + 1);
+            this.ordersRepository.save(singleOrder);
 
-        // Prepare the dough
-        await new Promise(resolve => setTimeout(resolve, this.doughTime));
-        createdOrder.doughTime = this.doughTime;
-        await this.ordersRepository.save(createdOrder);
+            // Add toppings
+            const toppingTime = singleOrder.toppings.length * this.toppingTime / this.toppingChefs;
+            await new Promise(resolve => setTimeout(resolve, toppingTime));
+            singleOrder.toppingTime = toppingTime;
+            await this.ordersRepository.findOneAndUpdate({ orderNumber: singleOrder.orderNumber }, { $set: { toppingTime: singleOrder.toppingTime } });
 
-        // Add toppings
-        const toppingTime = createdOrder.toppings.length * this.toppingTime / this.toppingChefs;
-        await new Promise(resolve => setTimeout(resolve, toppingTime));
-        createdOrder.toppingTime = toppingTime;
-        await this.ordersRepository.save(createdOrder);
+            // Cook in oven
+            await new Promise(resolve => setTimeout(resolve, this.ovenTime));
+            singleOrder.ovenTime = this.ovenTime;
+            await this.ordersRepository.findOneAndUpdate({ orderNumber: singleOrder.orderNumber }, { $set: { ovenTime: singleOrder.ovenTime } });
 
-        // Cook in oven
-        await new Promise(resolve => setTimeout(resolve, this.ovenTime));
-        createdOrder.ovenTime = this.ovenTime;
-        await this.ordersRepository.save(createdOrder);
+            // Serve to customer
+            await new Promise(resolve => setTimeout(resolve, this.walkingDistance));
+            singleOrder.walkingDistance = this.walkingDistance;
+            singleOrder.totalTime = this.doughTime + toppingTime + this.ovenTime + this.walkingDistance;
+            singleOrder.status = 'served';
+            await this.ordersRepository.findOneAndUpdate({ orderNumber: singleOrder.orderNumber }, { $set: { status: singleOrder.status, walkingDistance: singleOrder.walkingDistance, totalTime: singleOrder.totalTime } });
+        }
+        res.status(201).json({ id: order.map(o => o.orderNumber) });
 
-        // Serve to customer
-        await new Promise(resolve => setTimeout(resolve, this.walkingDistance));
-        createdOrder.walkingDistance = this.walkingDistance;
-        createdOrder.totalTime = this.doughTime + toppingTime + this.ovenTime + this.walkingDistance;
-        createdOrder.status = 'served';
-        await this.ordersRepository.save(createdOrder);
-        res.status(201).json({ id: createdOrder.id });
     }
+
+
 
     @Get()
     async getOrders() {
         return this.ordersRepository.find();
     }
 
-    @Get('/:id')
-    async getOrderById(@Param('id') id: string) {
-        const order = await this.ordersRepository.findOneBy({ id: id });
-        if (!order) throw new NotFoundException();
+    @Get('/:orderNumber')
+    async getOrderById(@Param('orderNumber') orderNumber: number) {
+        const order = await this.ordersRepository.findOneBy({ "orderNumber": orderNumber });
+        if (!order) throw new NotFoundException("No Order found");
         return order;
     }
-    @Get('/:id/report')
-    async getReportById(@Param('id') id: string) {
-        const order = await this.ordersRepository.findOneBy({ id: id });
-        if (!order) throw new NotFoundException();
+    @Get('/:orderNumber/report')
+    async getReportById(@Param('orderNumber') orderNumber: number) {
+        const order = await this.ordersRepository.findOneBy({ orderNumber: orderNumber });
+        if (!order) throw new NotFoundException("No ID found");
         return {
             doughTime: order.doughTime,
             toppingTime: order.toppingTime,

@@ -5,6 +5,9 @@ export class Order {
     @ObjectIdColumn()
     id: ObjectID;
 
+    @PrimaryGeneratedColumn()
+    orderNumber: string;
+
     @Column('simple-array')
     toppings: string[];
 
