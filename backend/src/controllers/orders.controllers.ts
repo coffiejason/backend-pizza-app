@@ -19,34 +19,6 @@ export class OrdersController {
         private ordersRepository: MongoRepository<Order>,
     ) { }
 
-    // @Post()
-    // async createOrder(@Body() order: Order, @Res() res) {
-    //     // Prepare the dough
-    //     await new Promise(resolve => setTimeout(resolve, this.doughTime));
-    //     order.doughTime = this.doughTime;
-    //     order.orderNumber = Math.floor((Math.random() * 10000000000) + 1);
-    //     this.ordersRepository.save(order);
-
-
-    //     // Add toppings
-    //     const toppingTime = order.toppings.length * this.toppingTime / this.toppingChefs;
-    //     await new Promise(resolve => setTimeout(resolve, toppingTime));
-    //     order.toppingTime = toppingTime;
-    //     await this.ordersRepository.findOneAndUpdate({orderNumber: order.orderNumber}, {$set: {toppingTime: order.toppingTime}});
-
-    //     // Cook in oven
-    //     await new Promise(resolve => setTimeout(resolve, this.ovenTime));
-    //     order.ovenTime = this.ovenTime;
-    //     await this.ordersRepository.findOneAndUpdate({orderNumber: order.orderNumber}, {$set: {ovenTime: order.ovenTime}});
-
-    //     // Serve to customer
-    //     await new Promise(resolve => setTimeout(resolve, this.walkingDistance));
-    //     order.walkingDistance = this.walkingDistance;
-    //     order.totalTime = this.doughTime + toppingTime + this.ovenTime + this.walkingDistance;
-    //     order.status = 'served';
-    //     await this.ordersRepository.findOneAndUpdate({orderNumber: order.orderNumber}, {$set: {status: order.status, walkingDistance: order.walkingDistance, totalTime: order.totalTime}});
-    //     res.status(201).json({ id: order.orderNumber });
-    // }
 
     @Post()
     async createOrder(@Body() order: Order | Order[], @Res() res) {
@@ -122,6 +94,8 @@ export class OrdersController {
     }
 
 }
+
+
 
 //     constructor(
 //         @InjectRepository(Order)

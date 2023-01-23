@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;500;700&display=swap');
+
+:root {
+  --font-size: 1.3rem;
+  --mont: "Montserrat", monospace;
+  --sans: Montserrat, sans-serif;
+}
+
+body {
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  font-family: var(--mont);
+}
+
+/*Order Page*/
+
+.header {
+
+  margin: 65px auto;
+
+}
+
+h2 {
+  font-family: var(--mont);
+  font-weight: 400;
+}
+
+h2 span {
+  color: brown;
+  font-weight: 700;
+}
+
+.primary-button {
+  color: #fff;
+  font-size: 15px;
+  text-transform: uppercase;
+  background: linear-gradient(45deg, brown, rgb(255, 89, 64));
+  padding: 12px 30px;
+  border-radius: 30px;
+  border: none;
+}
+
+.primary-button:hover {
+  background: linear-gradient(260deg, brown, rgb(255, 89, 64));
+}
+
+.img-div img {
+  width: 100px;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: row;
+  width: 400px;
+
+  background-color: rgb(252, 252, 252);
+
+  border-radius: 7px;
+
+  margin: 10px auto;
+}
+
+.card-container:hover {
+  background-color: white;
+}
+
+.text-div p {
+  color: gray;
+
+}
+
+.track-order-text:hover {
+  color: brown;
+}
+
+.status-container input {
+  padding: 10px;
+  border: solid 2px rgb(144, 144, 144);
+  border-radius: 10px;
+  transition: all 0.3s;
+  margin-right: 10px;
+  text-align: center;
+}
+
+
+/*---- RECIEPT ----*/
+.receipt {
+  background-color: #fff;
+  width: 22rem;
+  position: relative;
+  padding: 1rem;
+  box-shadow: 0 -0.4rem 1rem -0.4rem rgba(0, 0, 0, 0.2);
+}
+
+.receipt:after {
+  background-image: linear-gradient(135deg, #fff 0.5rem, transparent 0), linear-gradient(-135deg, #fff 0.5rem, transparent 0);
+  background-position: left-bottom;
+  background-repeat: repeat-x;
+  background-size: 1rem;
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: -1rem;
+  left: 0;
+  width: 100%;
+  height: 1rem;
+}
+
+.receipt__header {
+  text-align: center;
+}
+
+.receipt__title {
+  color: brown;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 1rem 0 0.5rem;
+}
+
+.receipt__date {
+  font-size: 0.8rem;
+  color: #666;
+  margin: 0.5rem 0 1rem;
+}
+
+.receipt__list {
+  margin: 2rem 0 1rem;
+  padding: 0 1rem;
+}
+
+.receipt__list-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+  position: relative;
+}
+
+.receipt__list-row:after {
+  content: '';
+  display: block;
+  border-bottom: 1px dotted rgba(0, 0, 0, 0.15);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: -0.25rem;
+  z-index: 1
+}
+
+.receipt__item {
+  background-color: #fff;
+  z-index: 2;
+  padding: 0 0.15rem 0 0;
+  color: #1f1f1f;
+}
+
+.receipt__cost {
+  margin: 0;
+  padding: 0 0 0 0.15rem;
+  background-color: #fff;
+  z-index: 2;
+  color: #1f1f1f;
+}
+
+.receipt__list-row--total {
+  border-top: 1px solid brown;
+  padding: 1.5rem 0 0;
+  margin: 1.5rem 0 0;
+  font-weight: 700;
+}
