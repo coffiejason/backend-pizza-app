@@ -63,13 +63,16 @@ In your .env file assign your mongodb url to DATABASE_URL
 
 ```
 
+Start the server. 
+
 ```bash
   npm run start
 ```
 
-Start the server
+Note. server runs on port:3600
 
-```bash
-  npm run dev
-```
-
+Endoints
+ POST: http://localhost:3600/orders - sumbit an order
+ GET: http://localhost:3600/orders - Get all orders
+ GET: http://localhost:3600/orders/:id = Get data on an order where "id" is the order number (Including cook data)
+ GET: http://localhost:3600/orders/:id/report = Get cook data on an order where "id" is the order number.
