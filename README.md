@@ -54,7 +54,14 @@ Install dependencies
   npm install 
 ```
 
-Create a .env file in th root of the backend folder which would contain your mongodb url
+Create a .env file in th root of the backend folder which would contain your mongodb url.
+
+In your .env file assign your mongodb url to DATABASE_URL
+
+```bash
+  DATABASE_URL=your.mongodb.url
+
+```
 
 ```bash
   npm run start
