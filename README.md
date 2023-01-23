@@ -72,7 +72,7 @@ Start the server.
 Note. server runs on port:3600
 
 Endoints
- POST: http://localhost:3600/orders - sumbit an order <br />
+ POST: http://localhost:3600/orders - sumbit an order (single or multiple) <br />
  GET: http://localhost:3600/orders - Get all orders <br />
  GET: http://localhost:3600/orders/:id = Get data on an order where "id" is the order number (Including cook data) <br />
  GET: http://localhost:3600/orders/:id/report = Get cook data on an order where "id" is the order number. 
