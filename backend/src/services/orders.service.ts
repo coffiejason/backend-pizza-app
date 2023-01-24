@@ -45,7 +45,8 @@ export class OrdersService {
             // Prepare the dough
             await new Promise(resolve => setTimeout(resolve, this.doughTime));
             singleOrder.doughTime = this.doughTime;
-            //singleOrder.orderNumber = "" + Math.floor((Math.random() * 10000000000) + 1);
+            await this.ordersRepository.findOneAndUpdate({ orderNumber: singleOrder.orderNumber }, { $set: { doughTime: singleOrder.toppingTime } });
+
 
             // Add toppings
             const toppingTime = singleOrder.toppings.length * this.toppingTime / this.toppingChefs;
