@@ -23,6 +23,7 @@ export class OrdersController {
         if (!order) throw new NotFoundException("No Order found");
         return order;
     }
+    
     @Get('/:orderNumber/report')
     async getReportById(@Param('orderNumber') orderNumber: number) {
         const order = await this.ordersService.getOrderById(orderNumber);

@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import { Header, Pizza } from '../../components'
-import { useNavigate } from 'react-router-dom'
+import { json, useNavigate } from 'react-router-dom'
 
 let toppings = [
     {
@@ -35,25 +35,36 @@ let toppings = [
 ]
 
 
+
 const OrderPage = () => {
 
     const [msg,setMsg] = useState('PLACE AN ORDER');
     const navigate = useNavigate();
+    const set1 = [];
 
-    function handleClick() {
+    const handleChoose = (val) =>{
+        //const a = toppings.find(item => item.key === val.key)
+        //set1.add(val.key)
 
-        setMsg('SENDING YOUR ORDER')
+        val.checked ? set1.push(val.key) : set1.pop(val.key)
+        console.log(val)
+        console.log(set1)
+    }
+
+    const handleClick = () => {
+        let orderList = []
+
+        set1.forEach((num)=>{
+            const a = toppings.find(item => item.key === num)
+            const b = {name: a.name, toppings: a.toppingsarr}
+            orderList.push(b)
+        })
+
+        console.log(orderList)
+
         
-        let raw = JSON.stringify({
-            "toppings": [
-                "mushrooms",
-                "pear",
-                "pineapple",
-                "bacon",
-                "cheese",
-                "dandelion"
-            ]
-        });
+        
+        let raw = JSON.stringify(orderList);
 
         const requestOptions = {
             method: 'POST',
@@ -61,13 +72,16 @@ const OrderPage = () => {
             body: raw
         };
 
-        fetch('http://localhost:3600/orders', requestOptions)
+        if(orderList.length != 0){
+            setMsg('SENDING YOUR ORDER')
+            
+            fetch('http://localhost:3600/orders', requestOptions)
             .then(response => response.json())
             .then(response =>{
                 setMsg('PLACE AN ORDER');
                 console.log(response.id[0])
                 //sessionStorage.setItem("orderId",)
-                navigate("/status",{state: response.id[0]});
+                navigate("/status",{state: response.id});
             })
             .catch((err)=>{
                 setMsg('AN ERROR OCCURRED')
@@ -76,6 +90,13 @@ const OrderPage = () => {
                     setMsg('PLACE AN ORDER')
                 },5000)
             })
+
+        }
+        else{
+            alert('Select at least on pizza')
+        }
+
+
     }
 
     return (
@@ -86,7 +107,7 @@ const OrderPage = () => {
                 <div>
                     {
                         toppings.map((topping) => (
-                            <Pizza key={topping.key} image={topping.img} flavor={topping.name} toppings={topping.toppings} />
+                            <Pizza key={topping.key} id={topping.key} image={topping.img} flavor={topping.name} toppings={topping.toppings} choose={handleChoose}/>
                         ))
                     }
                 </div>

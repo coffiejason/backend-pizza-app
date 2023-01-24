@@ -14,11 +14,11 @@ const StatusPage = () => {
     useEffect(()=>{
         
         console.log('rendered')
-        //sessionStorage.get("orderId")
+
         if(location !== null){
-            console.log("we",location.state)
-            setOrderNumber(location.state)
-            getData(location.state)
+            console.log("we",location.state[0])
+            setOrderNumber(location.state[0])
+            orderNumber ? getData(orderNumber) : getData(location.state[0])
         }
     },[])
 
@@ -32,6 +32,8 @@ const StatusPage = () => {
         
         setReceipt()
 
+        
+
         fetch(`http://localhost:3600/orders/${ordernumber}/report`, {
             method: 'GET',
             redirect: 'follow'
@@ -40,8 +42,8 @@ const StatusPage = () => {
             .then(result => {
                 console.log(result)
                 !result.statusCode ? setFeedBack('') : setFeedBack('Could not find that order')
-                result.status === 'served' ? setReceipt(result) : setTimeout(()=>{getData(ordernumber)},3000)
-                //console.log(result)
+
+                result.status === 'served' && feedBack !== 'Could not find that order' ? setReceipt(result) : setTimeout(()=>{getData(ordernumber)},10000)
             })
             .catch(error => console.log('error', error));
     }
