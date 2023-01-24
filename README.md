@@ -69,7 +69,6 @@ Start the server.
   npm run start
 ```
 
-Note. server runs on port:3600
 
 Endoints
  POST: http://localhost:3600/orders - sumbit an order (single or multiple) <br />
