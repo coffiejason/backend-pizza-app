@@ -15,10 +15,10 @@ const StatusPage = () => {
         
         console.log('rendered')
 
-        if(location !== null){
-            console.log("we",location.state[0])
-            setOrderNumber(location.state[0])
-            orderNumber ? getData(orderNumber) : getData(location.state[0])
+        if(sessionStorage.getItem("orderId") !== null){
+            //console.log("we",location.state[0])
+            setOrderNumber(sessionStorage.getItem("orderId"))
+            orderNumber ? getData(sessionStorage.getItem("orderId")) : getData(sessionStorage.getItem("orderId"))
         }
     },[])
 
@@ -64,9 +64,6 @@ const StatusPage = () => {
                 <p>{receipt && receipt.doughTime}</p>
 
             </div>
-            {
-
-            }
             {receipt ? (<Reciept data={receipt}/>): (<Processing />)}
         </>
     )

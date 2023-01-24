@@ -80,14 +80,17 @@ const OrderPage = () => {
             .then(response =>{
                 setMsg('PLACE AN ORDER');
                 console.log(response.id[0])
-                //sessionStorage.setItem("orderId",)
-                navigate("/status",{state: response.id});
+                sessionStorage.setItem("orderId",response.id)
+                navigate("/status",);
             })
             .catch((err)=>{
                 setMsg('AN ERROR OCCURRED')
+                //alert('ENSURE THE SERVER IS RUNNING');
 
                 setTimeout(()=>{
-                    setMsg('PLACE AN ORDER')
+                    
+                    setMsg('PLACE AN ORDER');
+                    alert('ENSURE THE SERVER IS RUNNING');
                 },5000)
             })
 
