@@ -19,6 +19,8 @@ const StatusPage = () => {
             //console.log("we",location.state[0])
             setOrderNumber(sessionStorage.getItem("orderId"))
             orderNumber ? getData(sessionStorage.getItem("orderId")) : getData(sessionStorage.getItem("orderId"))
+
+            sessionStorage.removeItem("orderId");
         }
     },[])
 
@@ -29,6 +31,7 @@ const StatusPage = () => {
 
     const getData = (ordernumber) => {
         orderNumber && setFeedBack('Fetching your order ...')
+        console.log('tracking')
         
         setReceipt()
 
@@ -64,7 +67,7 @@ const StatusPage = () => {
                 <p>{receipt && receipt.doughTime}</p>
 
             </div>
-            {receipt ? (<Reciept data={receipt}/>): (<Processing />)}
+            {receipt ? (<Reciept data={receipt}/>): <Processing orderNum={orderNumber} />}
         </>
     )
 }

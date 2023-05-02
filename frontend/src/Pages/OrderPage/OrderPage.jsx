@@ -61,10 +61,8 @@ const OrderPage = () => {
         })
 
         console.log(orderList)
-
         
-        
-        let raw = JSON.stringify(orderList);
+        let raw = JSON.stringify(orderList[0]);
 
         const requestOptions = {
             method: 'POST',
@@ -98,15 +96,13 @@ const OrderPage = () => {
         else{
             alert('Select at least on pizza')
         }
-
-
     }
 
     return (
         <>
             <Header />
             <>
-                <label>Place an Order</label>
+                <label>Place an Order </label>
                 <div>
                     {
                         toppings.map((topping) => (
