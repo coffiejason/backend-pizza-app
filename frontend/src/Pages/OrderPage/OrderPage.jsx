@@ -27,7 +27,7 @@ let toppings = [
     },
     {
         key: 4,
-        name: "Pizza Mare e Monti",
+        name: "Pizza Supreme",
         img: "https://www.jotform.com/uploads/LaurelWood/form_files/slices-pizza_23-2147517737%20copy%204.jpg",
         toppingsarr: ["Cheese", "Pear", "Mushrooms"],
         toppings: "Cheese, Pear, Mushrooms"
