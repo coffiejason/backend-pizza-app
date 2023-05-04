@@ -39,6 +39,7 @@ h2 span {
   padding: 12px 30px;
   border-radius: 30px;
   border: none;
+  margin-bottom: 8px;
 }
 
 .primary-button:hover {
