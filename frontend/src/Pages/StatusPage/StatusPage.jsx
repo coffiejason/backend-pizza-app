@@ -25,6 +25,7 @@ const StatusPage = () => {
     },[])
 
     const handleInput = (e) => {
+        sessionStorage.removeItem("orderId");
         let inputVal = String(e.target.value)
         inputVal.length === 10 ? getData(inputVal) : setFeedBack('')
     }
@@ -46,9 +47,13 @@ const StatusPage = () => {
                 console.log(result)
                 !result.statusCode ? setFeedBack('') : setFeedBack('Could not find that order')
 
-                result.status === 'served' && feedBack !== 'Could not find that order' ? setReceipt(result) : setTimeout(()=>{getData(ordernumber)},10000)
+                result.status === 'served' && feedBack !== 'Could not find that order' ? setReceipt(result) : retryGetData(ordernumber,result.status)
             })
             .catch(error => console.log('error', error));
+    }
+
+    const retryGetData = (ordernumber, status) =>{
+        status === 'preparing' ? setTimeout(()=>{getData(ordernumber)},10000) : setFeedBack('Could not find that order');
     }
 
 
