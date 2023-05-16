@@ -36,8 +36,6 @@ const StatusPage = () => {
         
         setReceipt()
 
-        
-
         fetch(`http://localhost:3600/orders/${ordernumber}/report`, {
             method: 'GET',
             redirect: 'follow'
